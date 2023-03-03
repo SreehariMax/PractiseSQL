@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.renderscript.Sampler;
@@ -15,11 +16,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -69,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         FetchDatabase();
 
         fab_ad = findViewById(R.id.fab_addc);
+        registerForContextMenu(lst);
+        lst = findViewById(R.id.lst);
         fab_ad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                 add_dialog.show();
 
-                registerForContextMenu(lst);
+
             }
         });
     }
@@ -122,10 +129,55 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+
+
+
+
+
         switch(item.getItemId())
         {
             case R.id.edit:
                 Toast.makeText(this, "Edit clicked", Toast.LENGTH_SHORT).show();
+
+
+
+                TextView tv_id = (TextView) menuInfo.targetView.findViewById(R.id.no);
+                TextView tv_currency= (TextView) menuInfo.targetView.findViewById(R.id.txt1);
+                TextView tv_country = (TextView) menuInfo.targetView.findViewById(R.id.txt2);
+
+
+
+
+                String id = tv_id.getText().toString();
+
+
+                String country = tv_country.getText().toString();
+
+                String currency = tv_currency.getText().toString();
+
+
+                Intent modifyIntent = new Intent(MainActivity.this, Edit_details.class);
+
+//                modifyIntent.putExtra("id",id);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("id",id);
+                bundle.putString("country", country);
+                bundle.putString("currency", currency);
+
+
+
+                modifyIntent.putExtra("bundle",bundle);
+
+                startActivity(modifyIntent);
+
+
+
+
+
                 break;
             case R.id.delete:
                 Toast.makeText(this, "Delete clicked", Toast.LENGTH_SHORT).show();
