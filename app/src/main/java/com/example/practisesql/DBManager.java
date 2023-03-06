@@ -63,4 +63,28 @@ public class DBManager {
 
     }
 
+    public void Update(Long id, String country, String currency) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper._NAME,country);
+        contentValues.put(DBHelper._CURRENCY,currency);
+
+
+        database.update(DBHelper.TABLE_NAME,contentValues,DBHelper._ID
+               + " = " + id, null);
+
+
+
+
+
+    }
+
+    public void Delete(Long id) {
+
+        database.delete(DBHelper.TABLE_NAME,DBHelper._ID +" =?", new String[] {id.toString()});
+
+
+
+
+    }
 }

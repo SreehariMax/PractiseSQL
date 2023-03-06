@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         Add_Dialog add_dialog = new Add_Dialog(this);
 
-        FetchDatabase();
+
 
         fab_ad = findViewById(R.id.fab_addc);
-        registerForContextMenu(lst);
+
         lst = findViewById(R.id.lst);
         fab_ad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,17 +87,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        FetchDatabase();
     }
 
     public void FetchDatabase() {
 
 //        dbManager.Open();
-        fetch = dbManager.fetch();
+        Cursor  fetch = dbManager.fetch();
         dbManager.Close();
 
         adapter= new SimpleCursorAdapter(getApplicationContext(), R.layout.custom_list, fetch, fromDB, toUI);
 
         lst=findViewById(R.id.lst);
+        registerForContextMenu(lst);
         lst.setAdapter(adapter);
 
     }
@@ -125,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.context,menu);
 
         super.onCreateContextMenu(menu, v, menuInfo);
+
+
     }
 
     @Override
@@ -181,6 +186,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.delete:
                 Toast.makeText(this, "Delete clicked", Toast.LENGTH_SHORT).show();
+
+
+
+
                 break;
         }
         return super.onContextItemSelected(item);
