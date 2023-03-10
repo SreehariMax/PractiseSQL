@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
             R.id.txt1,
             R.id.txt2
     };
-//    String[] arr= {"India","Japan","Korea","China","Pakistan","USA","Russia","Brazil"};
 
 
     @Override
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbManager = new DBManager(this);
-        dbManager.Open();
+//        dbManager.Open();
 
         Add_Dialog add_dialog = new Add_Dialog(this);
 
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void FetchDatabase() {
 
-//        dbManager.Open();
+        dbManager.Open();
         Cursor  fetch = dbManager.fetch();
         dbManager.Close();
 
@@ -185,10 +184,18 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.delete:
-                Toast.makeText(this, "Delete clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Delete clicked", Toast.LENGTH_SHORT).show();
 
+                TextView d_id = (TextView) menuInfo.targetView.findViewById(R.id.no);
 
+                Long _id = Long.valueOf(d_id.getText().toString());
 
+                dbManager.Open();
+                dbManager.Delete(_id);
+                dbManager.Close();
+
+                startActivity(new Intent(MainActivity.this,MainActivity.class));
+                Toast.makeText(this, "Deleted "+d_id.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 break;
         }
